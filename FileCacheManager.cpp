@@ -1,17 +1,18 @@
-//
-// Created by Orsan Awwad on 09/01/2019.
-//
-
 #include "FileCacheManager.h"
 
 bool FileCacheManager::doesExist(std::string key) {
-    return false;
+    return solutionsMap.count(key);
 }
 
 std::string FileCacheManager::get(std::string key) {
-    return std::string();
+    if (doesExist(key)) {
+        return solutionsMap[key];
+    } else {
+        return null;
+    }
 }
 
-bool FileCacheManager::set(std::string key) {
-    return false;
+void FileCacheManager::set(std::string key, std::string value) {
+
+    solutionsMap[key] = value;
 }

@@ -1,17 +1,27 @@
-//
-// Created by Orsan Awwad on 08/01/2019.
-//
-
 #ifndef AP_MS2_ICACHEMANAGER_H
 #define AP_MS2_ICACHEMANAGER_H
 
 namespace server_side {
-    template <typename Key, typename Value>
+    template<typename Key, typename Value>
     class ICacheManager {
+    protected:
+        map <Key, Value> solutionsMap;
+
     public:
+/**
+ * Checks if the solution for the given problem is added before.
+ */
         virtual bool doesExist(Key key) = 0;
+
+/**
+ * Returns the solution for the given problem.
+ */
         virtual Value get(Key key) = 0;
-        virtual bool set(Key key) = 0;
+
+/**
+ * Sets the given problem to the solution.
+ */
+        virtual void set(Key key, Value value) = 0;
     };
 }
 

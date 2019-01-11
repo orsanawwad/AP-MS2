@@ -13,7 +13,7 @@ class FileCacheManager : server_side::ICacheManager<std::string, std::string> {
 
     virtual std::string get(std::string key);
 
-    virtual bool set(std::string key);
+    virtual void set(std::string key,std::string value);
 };
 
 
