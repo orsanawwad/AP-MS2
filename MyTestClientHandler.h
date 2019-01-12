@@ -7,11 +7,12 @@
 #include "ICacheManager.h"
 class MyTestClientHandler : public server_side::IClientHandler {
 private:
-    Solver solver;
-    CacheManger cm;
+    Solver <Problem,Solution> *solver;
+    CacheManger <Key,Value>*cm;
 public:
-    MyTestClientHandler();
-    virtual void handleClient(int socketIdentity);
+    MyTestClientHandler(Solver <Problem,Solution> *solver , CacheManger<Key,Value> *cm );
+
+    virtual void handleClient(istream inputStream , ostream outputStream);
 };
 
 
