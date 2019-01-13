@@ -4,7 +4,7 @@
 namespace server_side {
     class IClientHandler {
     public:
-        virtual void handleClient(istream inputStream , ostream outputStream) = 0;
+        virtual void handleClient(int socketIdentity) = 0;
     };
 }
 

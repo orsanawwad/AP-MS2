@@ -2,29 +2,47 @@
 #define AP_MS2_STATE_H
 
 #include <iostream>
+#include <sstream>
 
 template<typename StateType, typename CostType>
 class State {
 private:
     StateType state;
     CostType cost;
-    State* cameFrom;
+    State* parentState;
 public:
-    State(StateType state, CostType cost) : state(state), cost(cost) {}
+    State(StateType state, CostType cost) : state(state), cost(cost), parentState(NULL) {}
 
     bool equalsTo(State<StateType,CostType> stateToCompare) { return stateToCompare.state == this->state; };
 
-    void setCameFrom(State *cameFrom) {
-        this->cameFrom = cameFrom;
+    void setParentState(State *parent) {
+        this->parentState = parent;
     }
+
+    State *getParentState() const {
+        return parentState;
+    }
+
+//    bool operator==(const long value) const {
+//        return this == value;
+//    }
+//
+//    bool operator!=(const long value) const {
+//        return this != value;
+//    }
 
     bool operator==(const State &rhs) const {
         return state == rhs.state;
     }
 
-    bool operator<(const State &rhs) const {
-        return cost > rhs.cost;
+    bool operator==(const State *rhs) const {
+        return state == rhs->state;
     }
+
+    bool operator!=(const State &rhs) const {
+        return state != rhs.state;
+    }
+
 
     StateType getState() const {
         return state;
@@ -37,12 +55,70 @@ public:
     void setCost(CostType cost) {
         this->cost = cost;
     }
+
+    State(State<std::pair<int, int>, double> *&pState) {
+        this->state = pState->state;
+        this->cost = pState->cost;
+        this->parentState = pState->parentState;
+    }
+};
+
+template<typename StateType, typename CostType>
+struct StateComparator {
+    bool operator()(const State<StateType, CostType>* lhs, const State<StateType, CostType>* rhs) const {
+        return lhs->getCost() > rhs->getCost();
+    }
+};
+
+template<typename StateType, typename CostType>
+struct StateEqual {
+public:
+    bool operator()(const State<StateType, CostType> & state1,const State<StateType, CostType> & state2) const {
+        return state1.getState() == state2.getState();
+    }
+
+    bool operator()(const State<StateType, CostType> * state1,const State<StateType, CostType> * state2) const {
+        return state1->getState() == state2->getState();
+    }
 };
 
 template<typename StateType, typename CostType>
 struct StateHash {
+
+    std::string toString(State<StateType, CostType> state) const {
+        std::stringstream aa;
+        aa << state.getState().first;
+        aa << ",";
+        aa << state.getState().second;
+        return aa.str();
+    }
+
     std::size_t operator()(const State<StateType, CostType>& _state) const {
-        return std::hash<std::string>()(_state.getState());
+        return std::hash<std::string>()(toString(_state));
+    }
+
+    std::size_t operator()(const State<StateType, CostType>* _state) const {
+        return std::hash<std::string>()(toString(*_state));
+    }
+};
+
+template<typename T, typename G>
+struct PairHash {
+
+    std::string toString(std::pair<T, G> state) const {
+        std::stringstream aa;
+        aa << state.first;
+        aa << ",";
+        aa << state.second;
+        return aa.str();
+    }
+
+    std::size_t operator()(const std::pair<T, G>& pair) const {
+        return std::hash<std::string>()(toString(pair));
+    }
+
+    std::size_t operator()(const std::pair<T, G>* pair) const {
+        return std::hash<std::string>()(toString(*pair));
     }
 };
 

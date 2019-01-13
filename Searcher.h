@@ -8,13 +8,13 @@
 #include "ISearcher.h"
 #include "MyPriorityQueue.h"
 
-template<typename StateType, typename CostType>
-class Searcher : public ISearcher<StateType, CostType> {
-private:
+template<typename SolutionType, typename StateType, typename CostType>
+class Searcher : public ISearcher<SolutionType, StateType, CostType> {
+protected:
     unsigned long numberOfStatesEvaluated = 0;
 //    MyPriorityQueue<State<StateType,CostType>> priorityQueue;
 public:
-    virtual ISolution search(ISearchable<StateType, CostType> searchable) = 0;
+    virtual SolutionType search(ISearchable<StateType, CostType> * searchable) = 0;
 
     virtual unsigned long getNumberOfStatesEvaluated() {
         return this->numberOfStatesEvaluated;

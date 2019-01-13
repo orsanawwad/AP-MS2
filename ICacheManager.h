@@ -1,11 +1,13 @@
 #ifndef AP_MS2_ICACHEMANAGER_H
 #define AP_MS2_ICACHEMANAGER_H
 
+#include <unordered_map>
+
 namespace server_side {
     template<typename Key, typename Value>
     class ICacheManager {
     protected:
-        map <Key, Value> solutionsMap;
+        std::unordered_map <Key, Value> solutionsMap;
 
     public:
 /**

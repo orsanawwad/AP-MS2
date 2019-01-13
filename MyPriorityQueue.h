@@ -19,6 +19,12 @@ public:
         return last;
     }
 
+    const_iterator end() const {
+        auto last = this->c.cend();
+        return last;
+    }
+
+
     bool remove(const T& value) {
         auto it = std::find(this->c.begin(), this->c.end(), value);
         if (it != this->c.end()) {

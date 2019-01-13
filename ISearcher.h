@@ -3,10 +3,10 @@
 
 #include "ISearchable.h"
 
-template<typename StateType, typename CostType>
+template<typename SolutionType, typename StateType, typename CostType>
 class ISearcher {
 public:
-    virtual ISolution search(ISearchable<StateType, CostType> searchable) = 0;
+    virtual SolutionType search(ISearchable<StateType, CostType> * searchable) = 0;
     virtual unsigned long getNumberOfStatesEvaluated() = 0;
 };
 

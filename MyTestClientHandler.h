@@ -5,14 +5,21 @@
 #include "IClientHandler.h"
 #include "ISolver.h"
 #include "ICacheManager.h"
+template <typename Problem, typename Solution>
 class MyTestClientHandler : public server_side::IClientHandler {
 private:
-    Solver <Problem,Solution> *solver;
-    CacheManger <Key,Value>*cm;
+    server_side::ISolver <Problem,Solution> *solver;
+    server_side::ICacheManager<Problem,Solution>*cm;
 public:
-    MyTestClientHandler(Solver <Problem,Solution> *solver , CacheManger<Key,Value> *cm );
+//    MyTestClientHandler(server_side::ISolver <Problem,Solution> *solver, server_side::ICacheManager<Key,Value> *cm );
 
-    virtual void handleClient(istream inputStream , ostream outputStream);
+    MyTestClientHandler(server_side::ISolver<Problem, Solution> *solver,
+                        server_side::ICacheManager<Problem, Solution> *cm);
+
+//    virtual void handleClient(int socketIdentify);
+
+    virtual void handleClient(int socketIdentity);
+
 };
 
 

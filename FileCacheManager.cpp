@@ -8,7 +8,7 @@ std::string FileCacheManager::get(std::string key) {
     if (doesExist(key)) {
         return solutionsMap[key];
     } else {
-        return null;
+        return "-1";
     }
 }
 
