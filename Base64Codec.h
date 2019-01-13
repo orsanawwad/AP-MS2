@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 10/01/2019.
-//
-
 #ifndef AP_MS2_BASE64CODEC_H
 #define AP_MS2_BASE64CODEC_H
 

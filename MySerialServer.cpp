@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 09/01/2019.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,10 +11,7 @@
 #include "MySerialServer.h"
 
 void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) {
-    int sockfd, newsockfd, portno, clilen;
-    char buffer[256];
-    int n;
-    while (1) {
+    int sockfd, newsockfd, clilen;
         struct sockaddr_in serv_addr, cli_addr;
 
         /* First call to socket() function */
@@ -31,11 +24,10 @@ void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) 
 
         /* Initialize socket structure */
         bzero((char *) &serv_addr, sizeof(serv_addr));
-        portno = 5001;
 
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_addr.s_addr = INADDR_ANY;
-        serv_addr.sin_port = htons(portno);
+        serv_addr.sin_port = htons(port);
 
         /* Now bind the host address using bind() call.*/
         if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
@@ -50,6 +42,7 @@ void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) 
         listen(sockfd, 5);
         clilen = sizeof(cli_addr);
 
+    while (1) {
         /* Accept actual connection from the client */
         newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
 
@@ -58,7 +51,7 @@ void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) 
             exit(1);
         }
 
-        clientHandler->handleClient(sockfd);
+        clientHandler->handleClient(newsockfd);
 
     }
 
