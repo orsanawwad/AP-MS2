@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 09/01/2019.
-//
-
 #include "FileCacheManager.h"
 
 bool FileCacheManager::doesExist(std::string key) {

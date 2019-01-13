@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 08/01/2019.
-//
-
 #ifndef AP_MS2_ICACHEMANAGER_H
 #define AP_MS2_ICACHEMANAGER_H
 
