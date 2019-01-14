@@ -4,8 +4,11 @@
 #include "Base64Codec.h"
 #include "StringReverser.h"
 #include "BestFirstSearch.h"
+#include "BFS.h"
 #include "ISearchable.h"
 #include "MazeDomain.h"
+#include "ICacheManager.h"
+#include "FileCacheManager.h"
 
 int main() {
 //    std::cout << "Hello, World!" << std::endl;
@@ -16,7 +19,7 @@ int main() {
 
 //    std::cout << reverser.solve(hello) << std::endl;
 
-    server_side::Base64Codec codec;
+//    server_side::Base64Codec codec;
 
 //    std::cout << "------------" << std::endl;
 //    std::cout << "Encoded: " << codec.encodeValue(hello) << std::endl;
@@ -94,11 +97,16 @@ int main() {
 
     ISearchable<std::pair<int, int>, double> *searchable = new MazeDomain(values);
 
-    BestFirstSearch<std::pair<int,int>,double> bfs;
+    BFS<std::pair<int,int>,double> bfs;
 
     auto solution = bfs.search(searchable);
 
     std::cout << solution.getValues() << std::endl;
+    std::cout << bfs.getNumberOfStatesEvaluated() << std::endl;
+
+
+
+
 
     return 0;
 }
