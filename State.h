@@ -23,14 +23,6 @@ public:
         return parentState;
     }
 
-//    bool operator==(const long value) const {
-//        return this == value;
-//    }
-//
-//    bool operator!=(const long value) const {
-//        return this != value;
-//    }
-
     bool operator==(const State &rhs) const {
         return state == rhs.state;
     }
@@ -121,5 +113,10 @@ struct PairHash {
         return std::hash<std::string>()(toString(*pair));
     }
 };
+
+template<typename StateType, typename CostType>
+std::pair<int,int> operator-(const State<StateType, CostType>& lhs, const State<StateType, CostType>& rhs) {
+    return std::pair<int,int>(lhs.getState().first - rhs.getState().first, lhs.getState().second - rhs.getState().second);
+}
 
 #endif //AP_MS2_STATE_H

@@ -28,8 +28,6 @@ public:
             if (*currentState == *goalState) {
                 this->numberOfStatesEvaluated = closedStates.size();
 
-                State<std::pair<int, int>, double> *test = currentState;
-
                 return SearcherSolution<StateType, CostType>(currentState);
             };
             closedStates.insert(currentState);
@@ -42,8 +40,7 @@ public:
                     this->priorityQueue.find(state) == this->priorityQueue.end()) {
                     this->priorityQueue.push(state);
                 } else if (this->priorityQueue.find(state) != this->priorityQueue.end()) {
-                    auto aaaa = this->priorityQueue.find(state);
-                    State<StateType, CostType> *stateToCompare = *aaaa;
+                    State<StateType, CostType> *stateToCompare = *this->priorityQueue.find(state);;
                     if (state->getCost() < stateToCompare->getCost()) {
                         this->priorityQueue.remove(stateToCompare);
                         this->priorityQueue.push(state);
