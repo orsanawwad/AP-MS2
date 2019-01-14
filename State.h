@@ -9,11 +9,11 @@ class State {
 private:
     StateType state;
     CostType cost;
-    State* parentState;
+    State *parentState;
 public:
     State(StateType state, CostType cost) : state(state), cost(cost), parentState(NULL) {}
 
-    bool equalsTo(State<StateType,CostType> stateToCompare) { return stateToCompare.state == this->state; };
+    bool equalsTo(State<StateType, CostType> stateToCompare) { return stateToCompare.state == this->state; };
 
     void setParentState(State *parent) {
         this->parentState = parent;
@@ -65,7 +65,7 @@ public:
 
 template<typename StateType, typename CostType>
 struct StateComparator {
-    bool operator()(const State<StateType, CostType>* lhs, const State<StateType, CostType>* rhs) const {
+    bool operator()(const State<StateType, CostType> *lhs, const State<StateType, CostType> *rhs) const {
         return lhs->getCost() > rhs->getCost();
     }
 };
@@ -73,11 +73,11 @@ struct StateComparator {
 template<typename StateType, typename CostType>
 struct StateEqual {
 public:
-    bool operator()(const State<StateType, CostType> & state1,const State<StateType, CostType> & state2) const {
+    bool operator()(const State<StateType, CostType> &state1, const State<StateType, CostType> &state2) const {
         return state1.getState() == state2.getState();
     }
 
-    bool operator()(const State<StateType, CostType> * state1,const State<StateType, CostType> * state2) const {
+    bool operator()(const State<StateType, CostType> *state1, const State<StateType, CostType> *state2) const {
         return state1->getState() == state2->getState();
     }
 };
@@ -93,11 +93,11 @@ struct StateHash {
         return aa.str();
     }
 
-    std::size_t operator()(const State<StateType, CostType>& _state) const {
+    std::size_t operator()(const State<StateType, CostType> &_state) const {
         return std::hash<std::string>()(toString(_state));
     }
 
-    std::size_t operator()(const State<StateType, CostType>* _state) const {
+    std::size_t operator()(const State<StateType, CostType> *_state) const {
         return std::hash<std::string>()(toString(*_state));
     }
 };
@@ -113,11 +113,11 @@ struct PairHash {
         return aa.str();
     }
 
-    std::size_t operator()(const std::pair<T, G>& pair) const {
+    std::size_t operator()(const std::pair<T, G> &pair) const {
         return std::hash<std::string>()(toString(pair));
     }
 
-    std::size_t operator()(const std::pair<T, G>* pair) const {
+    std::size_t operator()(const std::pair<T, G> *pair) const {
         return std::hash<std::string>()(toString(*pair));
     }
 };

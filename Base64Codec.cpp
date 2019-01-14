@@ -2,7 +2,7 @@
 
 std::string server_side::Base64Codec::encodeValue(const std::string &value) {
 
-    unsigned char const* bytesToEncode = (unsigned char const*) value.c_str();
+    unsigned char const *bytesToEncode = (unsigned char const *) value.c_str();
 
     unsigned int valueLength = (unsigned int) value.size();
 
@@ -20,25 +20,24 @@ std::string server_side::Base64Codec::encodeValue(const std::string &value) {
             charArr4[2] = (unsigned char) (((charArr3[1] & 0x0f) << 2) + ((charArr3[2] & 0xc0) >> 6));
             charArr4[3] = (unsigned char) (charArr3[2] & 0x3f);
 
-            for(i = 0; (i <4) ; i++)
+            for (i = 0; (i < 4); i++)
                 encodedValue += base64Chars[charArr4[i]];
             i = 0;
         }
     }
 
-    if (i)
-    {
-        for(j = i; j < 3; j++)
+    if (i) {
+        for (j = i; j < 3; j++)
             charArr3[j] = '\0';
 
-        charArr4[0] = (unsigned char) ( charArr3[0] & 0xfc) >> 2;
+        charArr4[0] = (unsigned char) (charArr3[0] & 0xfc) >> 2;
         charArr4[1] = (unsigned char) (((charArr3[0] & 0x03) << 4) + ((charArr3[1] & 0xf0) >> 4));
         charArr4[2] = (unsigned char) (((charArr3[1] & 0x0f) << 2) + ((charArr3[2] & 0xc0) >> 6));
 
         for (j = 0; (j < i + 1); j++)
             encodedValue += base64Chars[charArr4[j]];
 
-        while((i++ < 3))
+        while ((i++ < 3))
             encodedValue += '=';
 
     }
@@ -55,10 +54,11 @@ std::string server_side::Base64Codec::decodeValue(const std::string &value) {
     unsigned char charArr4[4], charArr3[3];
     std::string ret;
 
-    while (valueLen-- && ( value[endlCheck] != '=') && isBase64((unsigned char) value[endlCheck])) {
-        charArr4[i++] = (unsigned char) value[endlCheck]; endlCheck++;
-        if (i ==4) {
-            for (i = 0; i <4; i++)
+    while (valueLen-- && (value[endlCheck] != '=') && isBase64((unsigned char) value[endlCheck])) {
+        charArr4[i++] = (unsigned char) value[endlCheck];
+        endlCheck++;
+        if (i == 4) {
+            for (i = 0; i < 4; i++)
                 charArr4[i] = (unsigned char) (base64Chars.find(charArr4[i]));
 
             charArr3[0] = (unsigned char) ((charArr4[0] << 2) + ((charArr4[1] & 0x30) >> 4));

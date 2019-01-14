@@ -11,9 +11,12 @@ namespace server_side {
     class Base64Codec {
     private:
         const std::string base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
         bool isBase64(unsigned char c);
+
     public:
         std::string encodeValue(const std::string &value);
+
         std::string decodeValue(const std::string &value);
     };
 }

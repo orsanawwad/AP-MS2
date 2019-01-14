@@ -5,11 +5,12 @@
 #include "IClientHandler.h"
 #include "ISolver.h"
 #include "ICacheManager.h"
-template <typename Problem, typename Solution>
+
+template<typename Problem, typename Solution>
 class MyTestClientHandler : public server_side::IClientHandler {
 private:
-    server_side::ISolver <Problem,Solution> *solver;
-    server_side::ICacheManager<Problem,Solution>*cm;
+    server_side::ISolver<Problem, Solution> *solver;
+    server_side::ICacheManager<Problem, Solution> *cm;
 public:
 //    MyTestClientHandler(server_side::ISolver <Problem,Solution> *solver, server_side::ICacheManager<Key,Value> *cm );
 

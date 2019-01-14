@@ -20,8 +20,7 @@ protected:
         std::vector<char> cellValue;
         std::vector<std::string> rowValues;
         char i;
-        while (rowStream >> i)
-        {
+        while (rowStream >> i) {
             cellValue.push_back(i);
             if (rowStream.peek() == ',') {
                 rowValues.push_back(std::string(cellValue.begin(), cellValue.end()));
@@ -33,10 +32,14 @@ protected:
         cellValue.clear();
         return rowValues;
     }
+
 public:
-    virtual State<StateType,CostType> *getInitialState() = 0;
-    virtual State<StateType,CostType> *getGoalState() = 0;
-    virtual std::unordered_set<State<StateType,CostType>*, StateHash<StateType,CostType>, StateEqual<StateType,CostType>> getAllPossibleStatesFrom(State<StateType, CostType>* state) = 0;
+    virtual State<StateType, CostType> *getInitialState() = 0;
+
+    virtual State<StateType, CostType> *getGoalState() = 0;
+
+    virtual std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>>
+    getAllPossibleStatesFrom(State<StateType, CostType> *state) = 0;
 };
 
 #endif //AP_MS2_SEARCHABLE_H

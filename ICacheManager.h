@@ -3,11 +3,12 @@
 
 #include <unordered_map>
 
+
 namespace server_side {
     template<typename Key, typename Value>
     class ICacheManager {
     protected:
-        std::unordered_map <Key, Value> solutionsMap;
+        std::unordered_map<Key, Value> solutionsMap;
 
     public:
 /**

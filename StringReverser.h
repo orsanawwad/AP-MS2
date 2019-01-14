@@ -5,7 +5,7 @@
 #include <string>
 #include "ISolver.h"
 
-class StringReverser : public server_side::ISolver<std::string,std::string> {
+class StringReverser : public server_side::ISolver<std::string, std::string> {
 public:
     virtual std::string solve(std::string problem);
 };

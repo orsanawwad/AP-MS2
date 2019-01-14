@@ -6,7 +6,7 @@
 
 class MySerialServer : public server_side::IServer {
 public:
-    virtual void open(int port, server_side::IClientHandler * clientHandler);
+    virtual void open(int port, server_side::IClientHandler *clientHandler);
 
     virtual void close();
 };

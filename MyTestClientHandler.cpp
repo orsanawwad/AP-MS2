@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <unistd.h>
+#include <strings.h>
 #include "MyTestClientHandler.h"
 #include "ISolver.h"
 #include "ICacheManager.h"
@@ -25,14 +26,14 @@ void MyTestClientHandler<Problem, Solution>::handleClient(int socketIdentity) {
     int n;
 
     /* If connection is established then start communicating */
-    bzero(buffer,256);
-    n = read( socketIdentity,buffer,255 );
+    bzero(buffer, 256);
+    n = read(socketIdentity, buffer, 255);
 
     if (n < 0) {
         perror("ERROR reading from socket");
         exit(1);
     }
-    printf("Here is the message: %s\n",buffer);
+    printf("Here is the message: %s\n", buffer);
     close(socketIdentity);
 //>>>>>>> Stashed changes
 }

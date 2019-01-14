@@ -11,33 +11,35 @@
 template<typename StateType, typename CostType>
 class BestFirstSearch : public Searcher<SearcherSolution<StateType, CostType>, StateType, CostType> {
 protected:
-    MyPriorityQueue<State<std::pair<int,int>,double>*, std::vector<State<std::pair<int,int>,double>*>,StateComparator<std::pair<int,int>,double>> priorityQueue;
+    MyPriorityQueue<State<std::pair<int, int>, double> *, std::vector<State<std::pair<int, int>, double> *>, StateComparator<std::pair<int, int>, double>> priorityQueue;
 public:
-    virtual SearcherSolution<StateType, CostType> search(ISearchable<StateType, CostType> * searchable) {
+    virtual SearcherSolution<StateType, CostType> search(ISearchable<StateType, CostType> *searchable) {
 
-        std::unordered_set<State<StateType,CostType>*, StateHash<StateType,CostType>, StateEqual<StateType,CostType>> closedStates;
+        std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>> closedStates;
 
         this->numberOfStatesEvaluated = 0;
-        State<StateType,CostType> *goalState = searchable->getGoalState();
+        State<StateType, CostType> *goalState = searchable->getGoalState();
 
         this->priorityQueue.push(searchable->getInitialState());
 
-        while(!this->priorityQueue.empty()) {
-            State<StateType,CostType> *currentState = this->priorityQueue.top();
+        while (!this->priorityQueue.empty()) {
+            State<StateType, CostType> *currentState = this->priorityQueue.top();
             this->priorityQueue.pop();
             if (*currentState == *goalState) {
                 this->numberOfStatesEvaluated = closedStates.size();
 
-                State<std::pair<int,int>, double> *test = currentState;
+                State<std::pair<int, int>, double> *test = currentState;
 
                 return SearcherSolution<StateType, CostType>(currentState);
             };
             closedStates.insert(currentState);
 
-            std::unordered_set<State<StateType,CostType>*, StateHash<StateType,CostType>, StateEqual<StateType,CostType>> possibleStates = searchable->getAllPossibleStatesFrom(currentState);
+            std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>> possibleStates = searchable->getAllPossibleStatesFrom(
+                    currentState);
 
             for (auto state : possibleStates) {
-                if (closedStates.find(state) == closedStates.end() && this->priorityQueue.find(state) == this->priorityQueue.end()) {
+                if (closedStates.find(state) == closedStates.end() &&
+                    this->priorityQueue.find(state) == this->priorityQueue.end()) {
                     this->priorityQueue.push(state);
                 } else if (this->priorityQueue.find(state) != this->priorityQueue.end()) {
                     auto aaaa = this->priorityQueue.find(state);
