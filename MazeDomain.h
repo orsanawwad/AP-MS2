@@ -86,8 +86,8 @@ public:
         std::unordered_set<State<std::pair<int, int>, double> *, StateHash<std::pair<int, int>, double>, StateEqual<std::pair<int, int>, double>> possible;
 
         std::pair<int, int> origin = state->getState();
-        std::pair<int, int> up = {origin.first + 1, origin.second};
-        std::pair<int, int> down = {origin.first - 1, origin.second};
+        std::pair<int, int> up = {origin.first - 1, origin.second};
+        std::pair<int, int> down = {origin.first + 1, origin.second};
         std::pair<int, int> left = {origin.first, origin.second - 1};
         std::pair<int, int> right = {origin.first, origin.second + 1};
 

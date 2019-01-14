@@ -31,9 +31,9 @@ public:
         }
         std::stringstream ss;
 
-        for (auto it = directions.begin(); it != directions.end(); ++it) {
+        for (auto it = directions.end() - 1; it != directions.begin() - 1; --it) {
             ss << *it;
-            if (it != (directions.end() - 1)) {
+            if (it != (directions.begin())) {
                 ss << ",";
             }
         }

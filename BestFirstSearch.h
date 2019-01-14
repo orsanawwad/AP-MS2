@@ -11,7 +11,7 @@
 template<typename StateType, typename CostType>
 class BestFirstSearch : public Searcher<SearcherSolution<StateType, CostType>, StateType, CostType> {
 protected:
-    MyPriorityQueue<State<std::pair<int, int>, double> *, std::vector<State<std::pair<int, int>, double> *>, StateComparator<std::pair<int, int>, double>> priorityQueue;
+    MyPriorityQueue<State<StateType, CostType> *, std::vector<State<StateType, CostType> *>, StateComparator<StateType, CostType>> priorityQueue;
 public:
     virtual SearcherSolution<StateType, CostType> search(ISearchable<StateType, CostType> *searchable) {
 
