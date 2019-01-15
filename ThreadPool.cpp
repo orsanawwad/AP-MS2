@@ -58,6 +58,7 @@ void ThreadPool::worker() {
         if (task) {
             task->execute();
             delete task;
+            task = NULL;
         }
     }
 }
@@ -68,7 +69,6 @@ void ThreadPool::exit() {
         this->workers.front().join();
         this->workers.pop();
     }
-
 }
 
 void ThreadPool::addTask(Task *task) {

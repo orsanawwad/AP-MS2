@@ -26,7 +26,11 @@ int main() {
     server->open(5400,clientHandler);
 
     delete server;
-
+    server = NULL;
+    delete solver;
+    solver = NULL;
+    delete cm;
+    cm = NULL;
 //    server->open(5400,clientHandler);
 
 //    std::string values = "11\n"

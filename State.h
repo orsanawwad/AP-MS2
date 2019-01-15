@@ -48,10 +48,14 @@ public:
         this->cost = cost;
     }
 
-    State(State<std::pair<int, int>, double> *&pState) {
+    State(State<StateType, CostType> *&pState) {
         this->state = pState->state;
         this->cost = pState->cost;
         this->parentState = pState->parentState;
+    }
+
+    State* clone() {
+        return new State<StateType, CostType>(*this);
     }
 };
 

@@ -28,41 +28,49 @@ protected:
 public:
     virtual SearcherSolution<StateType, CostType> search(ISearchable<StateType, CostType> *searchable) {
 
-        std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>> closedStates;
-
         this->numberOfStatesEvaluated = 0;
         State<StateType, CostType> *goalState = searchable->getGoalState();
 
-        auto init = searchable->getInitialState();
+        auto init = searchable->getInitialState()->clone();
 
         init->setCost(init->getCost() + manhattanDistanceHeuristics(init,goalState));
 
-        this->priorityQueue.push(searchable->getInitialState());
+        this->priorityQueue.push(init);
 
         while (!this->priorityQueue.empty()) {
             State<StateType, CostType> *currentState = this->priorityQueue.top();
             this->priorityQueue.pop();
             if (*currentState == *goalState) {
-                this->numberOfStatesEvaluated = closedStates.size();
-                return SearcherSolution<StateType, CostType>(currentState);
+                this->numberOfStatesEvaluated = this->closedStates.size();
+                SearcherSolution<StateType, CostType> goalSolution = SearcherSolution<StateType, CostType>(currentState);
+
+                while (!priorityQueue.empty()) {
+                    this->closedStates.erase(priorityQueue.top());
+                    delete priorityQueue.top();
+                    priorityQueue.pop();
+                }
+
+                return goalSolution;
             };
-            closedStates.insert(currentState);
+            this->closedStates.insert(currentState);
 
             std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>> possibleStates = searchable->getAllPossibleStatesFrom(
                     currentState);
 
             for (auto state : possibleStates) {
                 state->setCost(state->getCost() + manhattanDistanceHeuristics(state,goalState) - manhattanDistanceHeuristics(currentState, goalState));
-                if (closedStates.find(state) == closedStates.end() &&
+                if (this->closedStates.find(state) == this->closedStates.end() &&
                     this->priorityQueue.find(state) == this->priorityQueue.end()) {
-                    this->priorityQueue.push(state);
+                    this->priorityQueue.push(state->clone());
                 } else if (this->priorityQueue.find(state) != this->priorityQueue.end()) {
                     State<StateType, CostType> *stateToCompare = *this->priorityQueue.find(state);;
                     if (state->getCost() < stateToCompare->getCost()) {
                         this->priorityQueue.remove(stateToCompare);
-                        this->priorityQueue.push(state);
+                        this->priorityQueue.push(state->clone());
                     }
                 }
+                delete state;
+                state = NULL;
             }
         }
 

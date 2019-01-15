@@ -25,16 +25,10 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
                 client.sendMessage(solution);
             } else {
                 ISearchable<std::pair<int, int>, double> *searchable = new MazeDomain(data.str());
-                auto solution = solver->solve(searchable);
+                auto solution = solver->solve(searchable) + "\n";
                 cacheManager->set(data.str(),solution);
                 client.sendMessage(solution);
             }
-
-//            std::cout << wholeMessage.str();
-            //TODO: Parse problems
-            //TODO: Check for solutions in cache
-            //TODO: Run solver on each problem, the solver is an object adapter that should contain 4 instances
-            //      of the algorithms and run that problem to each on of them, determine the lowest cost, and retun that.
         }
         client.close();
     } catch (posix_sockets::timeout_exception &e) {

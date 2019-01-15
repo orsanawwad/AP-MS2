@@ -84,6 +84,7 @@ public:
         for (auto row : values) {
             for (auto state : row) {
                 delete state;
+                state = NULL;
             }
         }
     }
@@ -108,50 +109,70 @@ public:
         std::pair<int, int> right = {origin.first, origin.second + 1};
 
         if (isValidIndex(up)) {
-            State<std::pair<int, int>, double> *upState = new State<std::pair<int, int>, double>(
-                    values[up.first][up.second]);
+            State<std::pair<int, int>, double> *upState = values[up.first][up.second]->clone();//new State<std::pair<int, int>, double>(values[up.first][up.second]);
             if (state->getParentState() == NULL || *upState != *state->getParentState()) {
                 if (upState->getCost() != -1) {
                     upState->setCost(state->getCost() + upState->getCost());
                     upState->setParentState(state);
                     possible.insert(upState);
+                } else {
+                    delete upState;
+                    upState = NULL;
                 }
+            } else {
+                delete upState;
+                upState = NULL;
             }
         }
 
         if (isValidIndex(down)) {
-            State<std::pair<int, int>, double> *downState = new State<std::pair<int, int>, double>(
-                    values[down.first][down.second]);
+            State<std::pair<int, int>, double> *downState = values[down.first][down.second]->clone();//new State<std::pair<int, int>, double>(values[down.first][down.second]);
             if (state->getParentState() == NULL || *downState != *state->getParentState()) {
                 if (downState->getCost() != -1) {
                     downState->setCost(state->getCost() + downState->getCost());
                     downState->setParentState(state);
                     possible.insert(downState);
+                } else {
+                    delete downState;
+                    downState = NULL;
                 }
+            } else {
+                delete downState;
+                downState = NULL;
             }
         }
 
         if (isValidIndex(left)) {
-            State<std::pair<int, int>, double> *leftState = new State<std::pair<int, int>, double>(
-                    values[left.first][left.second]);
+            State<std::pair<int, int>, double> *leftState = values[left.first][left.second]->clone();//new State<std::pair<int, int>, double>(values[left.first][left.second]);
             if (state->getParentState() == NULL || *leftState != *state->getParentState()) {
                 if (leftState->getCost() != -1) {
                     leftState->setCost(state->getCost() + leftState->getCost());
                     leftState->setParentState(state);
                     possible.insert(leftState);
+                } else {
+                    delete leftState;
+                    leftState = NULL;
                 }
+            } else {
+                delete leftState;
+                leftState = NULL;
             }
         }
 
         if (isValidIndex(right)) {
-            State<std::pair<int, int>, double> *rightState = new State<std::pair<int, int>, double>(
-                    values[right.first][right.second]);
+            State<std::pair<int, int>, double> *rightState = values[right.first][right.second]->clone();//new State<std::pair<int, int>, double>(values[right.first][right.second]);
             if (state->getParentState() == NULL || *rightState != *state->getParentState()) {
                 if (rightState->getCost() != -1) {
                     rightState->setCost(state->getCost() + rightState->getCost());
                     rightState->setParentState(state);
                     possible.insert(rightState);
+                } else {
+                    delete rightState;
+                    rightState = NULL;
                 }
+            } else {
+                delete rightState;
+                rightState = NULL;
             }
         }
         return possible;

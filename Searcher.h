@@ -12,12 +12,18 @@ template<typename SolutionType, typename StateType, typename CostType>
 class Searcher : public ISearcher<SolutionType, StateType, CostType> {
 protected:
     unsigned long numberOfStatesEvaluated = 0;
-//    MyPriorityQueue<State<StateType,CostType>> priorityQueue;
+    std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>> closedStates;
 public:
     virtual SolutionType search(ISearchable<StateType, CostType> *searchable) = 0;
 
     virtual unsigned long getNumberOfStatesEvaluated() {
         return this->numberOfStatesEvaluated;
+    }
+
+    virtual ~Searcher() {
+        for (auto state : closedStates) {
+            delete state;
+        }
     }
 };
 

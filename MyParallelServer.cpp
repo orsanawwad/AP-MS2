@@ -14,6 +14,7 @@ void MyParallelServer::close() {
 MyParallelServer::~MyParallelServer() {
     this->serverThread->join();
     delete server;
+    server = NULL;
 }
 
 void MyParallelServer::startAccepting() {
@@ -26,6 +27,7 @@ void MyParallelServer::startAccepting() {
         } catch (posix_sockets::timeout_exception & e) {
             std::cout << "No new clients received, exiting..." << std::endl;
             this->server->close();
+            this->close();
             break;
         }
     }
