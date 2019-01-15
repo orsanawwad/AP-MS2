@@ -8,7 +8,7 @@
 #include "State.h"
 
 template<typename StateType, typename CostType>
-class SearcherSolution : public Solution<std::string> {
+class SearcherSolution : public Solution<std::string,CostType> {
 private:
     std::unordered_map<std::pair<int, int>, std::string, PairHash<int, int>> helperMap;
     State<StateType, CostType> *fromState;
@@ -19,6 +19,10 @@ public:
         helperMap.insert({{0, -1}, "Left"});
         helperMap.insert({{1, 0}, "Down"});
         helperMap.insert({{-1, 0}, "Up"});
+    }
+
+    virtual CostType getCost() {
+        return fromState->getCost();
     }
 
     virtual std::string getValues() {
