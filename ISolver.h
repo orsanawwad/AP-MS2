@@ -6,6 +6,7 @@ namespace server_side {
     class ISolver {
     public:
         virtual Solution solve(Problem problem) = 0;
+        virtual ~ISolver() {}
     };
 }
 

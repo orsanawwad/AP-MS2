@@ -21,7 +21,7 @@ public:
         helperMap.insert({{-1, 0}, "Up"});
     }
 
-    virtual CostType getCost() {
+    virtual CostType getCost() const {
         return fromState->getCost();
     }
 

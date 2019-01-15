@@ -8,6 +8,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <system_error>
 
 #include "Searchable.h"
 
@@ -42,19 +43,8 @@ public:
         while (std::getline(stream, line)) {
             std::vector<std::string> parsedVector = parseCSVLine(line);
             switch (count) {
-                case 0:
-                    size = std::stoi(parsedVector[0]);
-                    count++;
-                    break;
-                case 1:
-                    startPoint = {stoi(parsedVector[0]), stoi(parsedVector[1])};
-                    count++;
-                    break;
-                case 2:
-                    goalPoint = {stoi(parsedVector[0]), stoi(parsedVector[1])};
-                    count++;
-                    break;
-                default:
+                case 0: {
+                    size = parsedVector.size();
                     std::vector<State<std::pair<int, int>, double> *> rowValues;
                     for (auto &value : parsedVector) {
                         rowValues.push_back(
@@ -64,12 +54,38 @@ public:
                     values.push_back(rowValues);
                     column = 0;
                     row++;
+                    if (row == size) {
+                        count++;
+                    }
+                    break;
+                }
+                case 1: {
+                    startPoint = {stoi(parsedVector[0]), stoi(parsedVector[1])};
+                    count++;
+                    break;
+                }
+                case 2: {
+                    goalPoint = {stoi(parsedVector[0]), stoi(parsedVector[1])};
+                    count++;
+                    break;
+                }
+                default:
+                    throw std::system_error(std::error_code(errno, std::generic_category()), "could not parse correctly");
+
             }
         }
         initialState = values[startPoint.first][startPoint.second];
         initialState->setParentState(NULL);
         initialState->setCost(0);
         goalState = values[goalPoint.first][goalPoint.second];
+    }
+
+    virtual ~MazeDomain() {
+        for (auto row : values) {
+            for (auto state : row) {
+                delete state;
+            }
+        }
     }
 
     virtual State<std::pair<int, int>, double> *getInitialState() {

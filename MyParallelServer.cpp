@@ -5,7 +5,6 @@ void MyParallelServer::open(int port, server_side::IClientHandler *clientHandler
     this->server = new posix_sockets::TCPServer(port);
     this->server->listen(maxAllowedListens);
     this->serverThread = new std::thread(&MyParallelServer::startAccepting, this);
-    this->serverThread->join();
 }
 
 void MyParallelServer::close() {
@@ -13,6 +12,7 @@ void MyParallelServer::close() {
 }
 
 MyParallelServer::~MyParallelServer() {
+    this->serverThread->join();
     delete server;
 }
 

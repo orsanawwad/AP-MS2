@@ -4,19 +4,33 @@
 
 #include <sstream>
 #include "MyClientHandler.h"
+#include "MazeDomain.h"
+#include "Searchable.h"
 
 void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
     std::string message;
-    std::stringstream wholeMessage;
+    std::stringstream data;
     long msg;
     try {
         while ((msg = client.readLine(message)) > 0 && message != "end\n") {
-            wholeMessage << message;
+            data << message;
         }
         if (msg == 0) {
             std::cout << "Client closed connection" << std::endl;
         } else {
-//            std::cout << wholeMessage.str() << std::endl;
+            std::cout << "Client sent end connection" << std::endl;
+
+            if (cacheManager->doesExist(data.str())) {
+                auto solution = cacheManager->get(data.str());
+                client.sendMessage(solution);
+            } else {
+                ISearchable<std::pair<int, int>, double> *searchable = new MazeDomain(data.str());
+                auto solution = solver->solve(searchable);
+                cacheManager->set(data.str(),solution);
+                client.sendMessage(solution);
+            }
+
+//            std::cout << wholeMessage.str();
             //TODO: Parse problems
             //TODO: Check for solutions in cache
             //TODO: Run solver on each problem, the solver is an object adapter that should contain 4 instances
@@ -28,3 +42,10 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
         client.close();
     }
 }
+
+MyClientHandler::~MyClientHandler() {}
+
+MyClientHandler::MyClientHandler(server_side::ISolver<ISearchable<std::pair<int, int>, double> *, std::string> *solver,
+                                 server_side::ICacheManager<std::string, std::string> *cacheManager) : solver(solver),
+                                                                                                       cacheManager(
+                                                                                                               cacheManager) {}

@@ -64,6 +64,11 @@ void ThreadPool::worker() {
 
 void ThreadPool::exit() {
     this->tasks_queue.exit();
+    while (!this->workers.empty()) {
+        this->workers.front().join();
+        this->workers.pop();
+    }
+
 }
 
 void ThreadPool::addTask(Task *task) {
@@ -77,3 +82,5 @@ ClientHandlerTaskAdapter::ClientHandlerTaskAdapter(
 void ClientHandlerTaskAdapter::execute() {
     this->clientHandler->handleClient(client);
 }
+
+ClientHandlerTaskAdapter::~ClientHandlerTaskAdapter() {}

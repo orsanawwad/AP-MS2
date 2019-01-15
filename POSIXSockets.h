@@ -7,6 +7,7 @@
 #include <cerrno>
 #include <iostream>
 #include <string>
+#include "string.h"
 #include <system_error>
 #include <stdexcept>
 
@@ -50,6 +51,8 @@ namespace posix_sockets
         std::string read(int n);
 
         long readLine(std::string &bufferLine);
+
+        long sendMessage(std::string &message);
 
         void setTimeout(int sec, int usec = 0);
 

@@ -20,6 +20,7 @@
 class Task {
 public:
     virtual void execute() = 0;
+    virtual ~Task() {};
 };
 
 class ClientHandlerTaskAdapter : public Task {
@@ -27,8 +28,9 @@ class ClientHandlerTaskAdapter : public Task {
     posix_sockets::TCPClient client;
 public:
     ClientHandlerTaskAdapter(server_side::IClientHandler *clientHandler, const posix_sockets::TCPClient &client);
-
     virtual void execute();
+
+    virtual ~ClientHandlerTaskAdapter();
 };
 
 class TasksQueue {

@@ -66,6 +66,14 @@ long posix_sockets::TCPClient::readLine(std::string &bufferLine) {
     return bufferLine.length();
 }
 
+long posix_sockets::TCPClient::sendMessage(std::string &message) {
+    long msg;
+    if ((msg = ::send(this->sock.sock_fd , message.c_str(), message.length(), 0) < 0)) {
+        throw std::system_error(std::error_code(errno, std::generic_category()), "error on write");
+    }
+    return msg;
+}
+
 posix_sockets::TCPServer::TCPServer(int port) {
     sockaddr_in addr_in;
     addr_in.sin_family = AF_INET;

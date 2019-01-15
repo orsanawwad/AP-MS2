@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class FileCacheManager : server_side::ICacheManager<std::string, std::string> {
+class FileCacheManager : public server_side::ICacheManager<std::string, std::string> {
 
 public:
     FileCacheManager();
@@ -41,6 +41,9 @@ private:
     server_side::Base64Codec base64Codec;
 
     std::string fileName;
+
+public:
+    virtual ~FileCacheManager();
 
 };
 

@@ -7,8 +7,8 @@ namespace server_side {
     class IServer {
     public:
         virtual void open(int port, IClientHandler *clientHandler) = 0;
-
         virtual void close() = 0;
+        virtual ~IServer() {}
     };
 }
 

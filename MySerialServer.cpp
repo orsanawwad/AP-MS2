@@ -51,7 +51,7 @@ void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) 
             exit(1);
         }
 
-        clientHandler->handleClient(newsockfd);
+//        clientHandler->handleClient(newsockfd);
 
     }
 

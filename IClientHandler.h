@@ -7,6 +7,8 @@ namespace server_side {
     class IClientHandler {
     public:
         virtual void handleClient(posix_sockets::TCPClient client) = 0;
+
+        virtual ~IClientHandler() {}
     };
 }
 

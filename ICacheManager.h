@@ -25,7 +25,12 @@ namespace server_side {
  * Sets the given problem to the solution.
  */
         virtual void set(Key key, Value value) = 0;
+
+        virtual ~ICacheManager();
     };
+
+    template<typename Key, typename Value>
+    ICacheManager<Key, Value>::~ICacheManager() {}
 }
 
 #endif //AP_MS2_ICACHEMANAGER_H

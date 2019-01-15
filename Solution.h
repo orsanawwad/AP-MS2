@@ -8,8 +8,36 @@
 template<typename ReturnType, typename CostType>
 class Solution {
 public:
-    virtual CostType getCost() = 0;
+    virtual CostType getCost() const = 0;
     virtual ReturnType getValues() = 0;
 };
+
+template<typename ReturnType, typename CostType>
+bool operator<(const Solution<ReturnType, CostType>& lhs, const Solution<ReturnType, CostType>& rhs) {
+    const auto lcost = lhs.getCost();
+    const auto rcost = rhs.getCost();
+    return lcost < rcost;
+}
+
+template<typename ReturnType, typename CostType>
+bool operator>(const Solution<ReturnType, CostType>& lhs, const Solution<ReturnType, CostType>& rhs) {
+    const auto lcost = lhs.getCost();
+    const auto rcost = rhs.getCost();
+    return lcost > rcost;
+}
+
+template<typename ReturnType, typename CostType>
+bool operator<=(const Solution<ReturnType, CostType>& lhs, const Solution<ReturnType, CostType>& rhs) {
+    const auto lcost = lhs.getCost();
+    const auto rcost = rhs.getCost();
+    return lcost <= rcost;
+}
+
+template<typename ReturnType, typename CostType>
+bool operator>=(const Solution<ReturnType, CostType>& lhs, const Solution<ReturnType, CostType>& rhs) {
+    const auto lcost = lhs.getCost();
+    const auto rcost = rhs.getCost();
+    return lcost >= rcost;
+}
 
 #endif //AP_MS2_SOLUTION_H

@@ -73,3 +73,5 @@ std::vector<std::string> FileCacheManager::parseCSVLine(std::string line) {
     cellValue.clear();
     return rowValues;
 }
+
+FileCacheManager::~FileCacheManager() {}
