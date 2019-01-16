@@ -105,6 +105,9 @@ public:
         return this->goalState;
     }
 
+    virtual double getSize() {
+        return this->size;
+    }
 
     /**
      * Get next possible moves.

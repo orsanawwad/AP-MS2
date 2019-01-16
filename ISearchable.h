@@ -18,6 +18,9 @@ public:
     virtual std::unordered_set<State<StateType, CostType> *, StateHash<StateType, CostType>, StateEqual<StateType, CostType>>
     getAllPossibleStatesFrom(State<StateType, CostType> *state) = 0;
 
+    //TODO: REMOVE ME
+    virtual double getSize() = 0;
+
     virtual ~ISearchable() {}
 };
 
