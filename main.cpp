@@ -17,6 +17,9 @@
 
 int main(int argc, char* argv[]) {
 
+    if (argc != 2) {
+        return 1;
+    }
     server_side::IServer * server = new MyParallelServer();
     server_side::ICacheManager<std::string, std::string> * cm = new FileCacheManager;
     server_side::ISolver<ISearchable<std::pair<int,int>,double>*,std::string>* solver = new SearchableSolverAdapter();
