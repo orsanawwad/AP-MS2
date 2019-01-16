@@ -30,7 +30,21 @@ public:
             this->queue.pop();
             if (*currentState == *goalState) {
                 this->numberOfStatesEvaluated = this->closedStates.size();
-                return SearcherSolution<StateType, CostType>(currentState);
+                SearcherSolution<StateType, CostType> searcherSolution = SearcherSolution<StateType, CostType>(currentState);
+
+                delete currentState;
+
+                while (!queue.empty()) {
+                    this->closedStates.erase(queue.front());
+                    delete queue.front();
+                    queue.pop();
+                }
+
+                for (auto closed : this->closedStates) {
+                    delete closed;
+                }
+
+                return searcherSolution;
             } else if (this->closedStates.find(currentState) == this->closedStates.end()) {
 
                 this->closedStates.insert(currentState);
@@ -42,6 +56,7 @@ public:
                     state = NULL;
                 }
             }
+            delete currentState;
         }
         return SearcherSolution<StateType, CostType>(NULL);
     }

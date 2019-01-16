@@ -9,12 +9,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <mutex>
 #include "Base64Codec.h"
 
 using namespace std;
 
 class FileCacheManager : public server_side::ICacheManager<std::string, std::string> {
-
+    std::mutex cache_mutex;
 public:
     FileCacheManager();
 

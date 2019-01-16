@@ -31,6 +31,8 @@ int main() {
     solver = NULL;
     delete cm;
     cm = NULL;
+    delete clientHandler;
+    clientHandler = NULL;
 //    server->open(5400,clientHandler);
 
 //    std::string values = "11\n"

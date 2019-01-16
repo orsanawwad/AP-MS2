@@ -28,6 +28,7 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
                 auto solution = solver->solve(searchable) + "\n";
                 cacheManager->set(data.str(),solution);
                 client.sendMessage(solution);
+                delete searchable;
             }
         }
         client.close();

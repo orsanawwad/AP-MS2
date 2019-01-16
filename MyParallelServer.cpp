@@ -15,6 +15,8 @@ MyParallelServer::~MyParallelServer() {
     this->serverThread->join();
     delete server;
     server = NULL;
+    delete this->serverThread;
+    this->serverThread = NULL;
 }
 
 void MyParallelServer::startAccepting() {

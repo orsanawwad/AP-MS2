@@ -50,6 +50,8 @@ public:
                     priorityQueue.pop();
                 }
 
+                delete currentState;
+
                 return goalSolution;
             };
             this->closedStates.insert(currentState);
@@ -72,6 +74,7 @@ public:
                 delete state;
                 state = NULL;
             }
+            delete currentState;
         }
 
         return SearcherSolution<StateType, CostType>(NULL);

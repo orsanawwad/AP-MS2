@@ -33,6 +33,8 @@ public:
                     priorityQueue.pop();
                 }
 
+                delete currentState;
+
                 return goalSolution;
             };
             this->closedStates.insert(currentState);
@@ -43,17 +45,18 @@ public:
             for (auto state : possibleStates) {
                 if (this->closedStates.find(state) == this->closedStates.end() &&
                     this->priorityQueue.find(state) == this->priorityQueue.end()) {
-                    this->priorityQueue.push(state->clone());
+                    this->priorityQueue.push(state);
                 } else if (this->priorityQueue.find(state) != this->priorityQueue.end()) {
                     State<StateType, CostType> *stateToCompare = *this->priorityQueue.find(state);;
                     if (state->getCost() < stateToCompare->getCost()) {
                         this->priorityQueue.remove(stateToCompare);
-                        this->priorityQueue.push(state->clone());
+                        this->priorityQueue.push(state);
                     }
                 }
                 delete state;
                 state = NULL;
             }
+            delete currentState;
         }
 
         return SearcherSolution<StateType, CostType>(NULL);
