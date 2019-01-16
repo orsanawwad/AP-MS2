@@ -32,7 +32,7 @@ void MySerialServer::startAccepting() {
             clientHandler->handleClient(newClient);
             this->server->setTimeout(5);
         } catch (posix_sockets::timeout_exception & e) {
-            std::cout << "No new clients received, exiting..." << std::endl;
+//            std::cout << "No new clients received, exiting..." << std::endl;
             this->server->close();
             this->close();
             break;

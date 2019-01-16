@@ -20,14 +20,14 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
             data << message;
         }
         if (msg == 0) {
-            std::cout << "Client closed connection" << std::endl;
+//            std::cout << "Client closed connection" << std::endl;
         } else {
 
             /**
              * Check if exists in CacheManager, if so, return it, otherwise, solve it.
              */
 
-            std::cout << "Client sent end connection" << std::endl;
+//            std::cout << "Client sent end connection" << std::endl;
 
             if (cacheManager->doesExist(data.str())) {
                 auto solution = cacheManager->get(data.str());
@@ -47,7 +47,7 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
         }
         client.close();
     } catch (posix_sockets::timeout_exception &e) {
-        std::cout << "Client timed out" << std::endl;
+//        std::cout << "Client timed out" << std::endl;
         client.close();
     }
 }
