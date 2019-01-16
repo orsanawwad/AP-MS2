@@ -4,16 +4,30 @@
 #include <iostream>
 #include <sstream>
 
+/**
+ * State class used for SOLID princible to help solve graph problems.
+ * @tparam StateType Type of state.
+ * @tparam CostType Cost to get to state.
+ */
 template<typename StateType, typename CostType>
 class State {
 private:
+    /**
+     * State's state.
+     */
     StateType state;
+
+    /**
+     * State's cost.
+     */
     CostType cost;
+
+    /**
+     * State's parent.
+     */
     State *parentState;
 public:
     State(StateType state, CostType cost) : state(state), cost(cost), parentState(NULL) {}
-
-    bool equalsTo(State<StateType, CostType> stateToCompare) { return stateToCompare.state == this->state; };
 
     void setParentState(State *parent) {
         this->parentState = parent;
@@ -74,6 +88,9 @@ public:
     }
 };
 
+/**
+ * Hash functions for unordered_set
+ */
 template<typename StateType, typename CostType>
 struct StateHash {
 
@@ -114,6 +131,7 @@ struct PairHash {
     }
 };
 
+//Overloaded minus to eveluate 2 states directly.
 template<typename StateType, typename CostType>
 std::pair<int,int> operator-(const State<StateType, CostType>& lhs, const State<StateType, CostType>& rhs) {
     return std::pair<int,int>(lhs.getState().first - rhs.getState().first, lhs.getState().second - rhs.getState().second);

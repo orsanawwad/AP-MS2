@@ -5,25 +5,30 @@
 
 
 namespace server_side {
+    /**
+     * Cache manager implementation.
+     * @tparam Key key type
+     * @tparam Value value type
+     */
     template<typename Key, typename Value>
     class ICacheManager {
     protected:
         std::unordered_map<Key, Value> solutionsMap;
 
     public:
-/**
- * Checks if the solution for the given problem is added before.
- */
+        /**
+         * Checks if the solution for the given problem is added before.
+         */
         virtual bool doesExist(Key key) = 0;
 
-/**
- * Returns the solution for the given problem.
- */
+        /**
+         * Returns the solution for the given problem.
+         */
         virtual Value get(Key key) = 0;
 
-/**
- * Sets the given problem to the solution.
- */
+         /**
+         * Sets the given problem to the solution.
+         */
         virtual void set(Key key, Value value) = 0;
 
         virtual ~ICacheManager();

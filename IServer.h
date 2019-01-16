@@ -4,6 +4,9 @@
 #include "IClientHandler.h"
 
 namespace server_side {
+    /**
+     * Server interface for multi type server implementation.
+     */
     class IServer {
     public:
         virtual void open(int port, IClientHandler *clientHandler) = 0;

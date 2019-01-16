@@ -14,6 +14,9 @@
 #include "SearcherSolution.h"
 #include "Searcher.h"
 
+/**
+ * A* Implementationx
+ */
 template<typename StateType, typename CostType>
 class AstarAlgo : public Searcher<SearcherSolution<StateType, CostType>, StateType, CostType> {
 protected:

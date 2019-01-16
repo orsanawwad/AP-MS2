@@ -12,6 +12,10 @@
 
 #include "ISearchable.h"
 
+/**
+ * Searchable abstract class for solvin graph problems.
+ * Used to tidy up implementations.
+ */
 template<typename StateType, typename CostType>
 class Searchable : public ISearchable<StateType, CostType> {
 protected:

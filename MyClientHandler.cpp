@@ -12,18 +12,32 @@ void MyClientHandler::handleClient(posix_sockets::TCPClient client) {
     std::stringstream data;
     long msg;
     try {
+
+        /**
+         * Read whole problem
+         */
         while ((msg = client.readLine(message)) > 0 && message != "end\n") {
             data << message;
         }
         if (msg == 0) {
             std::cout << "Client closed connection" << std::endl;
         } else {
+
+            /**
+             * Check if exists in CacheManager, if so, return it, otherwise, solve it.
+             */
+
             std::cout << "Client sent end connection" << std::endl;
 
             if (cacheManager->doesExist(data.str())) {
                 auto solution = cacheManager->get(data.str());
                 client.sendMessage(solution);
             } else {
+
+                /**
+                 * Solve the problem.
+                 */
+
                 ISearchable<std::pair<int, int>, double> *searchable = new MazeDomain(data.str());
                 auto solution = solver->solve(searchable);
                 cacheManager->set(data.str(),solution);

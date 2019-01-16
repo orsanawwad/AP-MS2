@@ -8,6 +8,9 @@
 
 #define MAX_ALLOWED_LISTENS 10;
 
+/**
+ * Parallel server implementation, uses a thread pool.
+ */
 class MyParallelServer : public server_side::IServer {
     posix_sockets::TCPServer *server;
     server_side::IClientHandler *clientHandler;

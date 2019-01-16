@@ -14,6 +14,9 @@
 
 using namespace std;
 
+/**
+ * File cache manager implementation.
+ */
 class FileCacheManager : public server_side::ICacheManager<std::string, std::string> {
     std::mutex cache_mutex;
 public:
@@ -27,10 +30,25 @@ public:
 
     std::vector<std::string> parseCSVLine(std::string line);
 
+    /**
+     * Check if cache exists from key.
+     * @param key the key to check.
+     * @return
+     */
     virtual bool doesExist(std::string key);
 
+    /**
+     * Get cache of key.
+     * @param key object to get.
+     * @return cache type.
+     */
     virtual std::string get(std::string key);
 
+    /**
+     * Set or update cache of key.
+     * @param key object to update.
+     * @param value value to update.
+     */
     virtual void set(std::string key, std::string value);
 
     virtual string getFileName() {

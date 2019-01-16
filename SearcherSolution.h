@@ -7,6 +7,11 @@
 #include "Solution.h"
 #include "State.h"
 
+/**
+ * Solution implementation for Maze Graph Type problems.
+ * @tparam StateType should be a pair of ints
+ * @tparam CostType a double.
+ */
 template<typename StateType, typename CostType>
 class SearcherSolution : public Solution<std::string,CostType> {
 private:
@@ -15,6 +20,10 @@ public:
 
     SearcherSolution(State<StateType, CostType> *fromState) : fromState(fromState) {}
 
+    /**
+     * Get price.
+     * @return
+     */
     virtual CostType getCost() const {
         if (fromState == NULL) {
             return CostType(-1);
@@ -22,6 +31,10 @@ public:
         return fromState->getCost();
     }
 
+    /**
+     * Parse and restore a solution.
+     * @return
+     */
     virtual std::string getValues() const {
         if (fromState == NULL) {
             return std::string("-1");

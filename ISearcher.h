@@ -3,6 +3,12 @@
 
 #include "ISearchable.h"
 
+/**
+ * Searcher interface for different algorithms implementation.
+ * @tparam SolutionType solution implementation class.
+ * @tparam StateType state type of problem.
+ * @tparam CostType cost type of problem.
+ */
 template<typename SolutionType, typename StateType, typename CostType>
 class ISearcher {
 public:

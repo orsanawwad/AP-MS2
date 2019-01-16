@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 2019-01-15.
-//
-
 #include "SearchableSolverAdapter.h"
 #include "BFS.h"
 #include "DFS.h"

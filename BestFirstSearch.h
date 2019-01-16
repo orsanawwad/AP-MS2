@@ -8,6 +8,9 @@
 #include "SearcherSolution.h"
 #include "Searcher.h"
 
+/**
+ * Best first implementation.
+ */
 template<typename StateType, typename CostType>
 class BestFirstSearch : public Searcher<SearcherSolution<StateType, CostType>, StateType, CostType> {
 protected:

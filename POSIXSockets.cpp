@@ -59,10 +59,7 @@ long posix_sockets::TCPClient::readLine(std::string &bufferLine) {
             }
             throw std::system_error(std::error_code(errno, std::generic_category()), "error on read");
         } else if (read_len == 0) {
-//            this->close();
-//            return std::string("end");
             return read_len;
-            //TODO: FIX THIS HACK LIKE
         }
         ss << buffer;
     }

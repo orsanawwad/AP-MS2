@@ -11,7 +11,10 @@
 #include "ICacheManager.h"
 #include "ISearchable.h"
 
-//TODO: FIX GENERICS
+/**
+ * Main client handler for solving problems.
+ * accepts a solver and a cache manager.
+ */
 class MyClientHandler : public server_side::IClientHandler{
     server_side::ISolver<ISearchable<std::pair<int,int>,double>*,std::string>* solver;
     server_side::ICacheManager<std::string,std::string>* cacheManager;

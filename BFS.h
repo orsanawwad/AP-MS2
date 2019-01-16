@@ -13,10 +13,12 @@
 #include "SearcherSolution.h"
 #include "Searcher.h"
 
+/**
+ * Breadth-First Search implementation.
+ */
 template<typename StateType, typename CostType>
 class BFS : public Searcher<SearcherSolution<StateType, CostType>, StateType, CostType> {
 protected:
-    //MyPriorityQueue<State<std::pair<int, int>, double> *, std::vector<State<std::pair<int, int>, double> *>, StateComparator<std::pair<int, int>, double>> priorityQueue;
     std::queue<State<StateType, CostType>*> queue;
 public:
     virtual SearcherSolution<StateType, CostType> search(ISearchable<StateType, CostType> *searchable) {
@@ -33,8 +35,6 @@ public:
             this->queue.pop();
             if (*currentState == *goalState) {
                 this->numberOfStatesEvaluated = closedStates.size();
-
-                // State<std::pair<int, int>, double> *test = currentState;
 
                 return SearcherSolution<StateType, CostType>(currentState);
             } else if (closedStates.find(currentState) == closedStates.end()) {

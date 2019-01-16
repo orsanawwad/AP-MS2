@@ -5,6 +5,9 @@
 #include <unordered_set>
 #include "State.h"
 
+/**
+ * Searchable interface for different problem implementations
+ */
 template<typename StateType, typename CostType>
 class ISearchable {
 public:

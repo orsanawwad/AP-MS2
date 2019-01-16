@@ -1,7 +1,3 @@
-//
-// Created by Orsan Awwad on 12/01/2019.
-//
-
 #ifndef AP_MS2_MAZEDOMAIN_H
 #define AP_MS2_MAZEDOMAIN_H
 
@@ -12,9 +8,13 @@
 
 #include "Searchable.h"
 
-//template<typename StateType, typename CostType>
+/**
+ * Maze graph implementation
+ */
 class MazeDomain : public Searchable<std::pair<int, int>, double> {
 protected:
+
+    //Trash bin used to keep track of each pointer that has been allocated by this to prevent leakage.
     std::vector<State<std::pair<int, int>, double>*> listOfPointersToRemove;
     State<std::pair<int, int>, double> *initialState;
     State<std::pair<int, int>, double> *goalState;
@@ -41,6 +41,11 @@ public:
         int count = 0;
         int row = 0;
         int column = 0;
+
+        /**
+         * Read whole problem from user and parse it.
+         */
+
         while (std::getline(stream, line)) {
             std::vector<std::string> parsedVector = parseCSVLine(line);
             switch (count) {
@@ -100,6 +105,25 @@ public:
         return this->goalState;
     }
 
+
+    /**
+     * Get next possible moves.
+     *
+     * Check up down left right
+     *
+     * Make sure it's valid
+     *
+     * Clone that state position
+     *
+     * Update parent and price
+     *
+     * Add to a hash set
+     *
+     * Send.
+     *
+     * @param state possible moves from this state.
+     * @return hash set.
+     */
     virtual std::unordered_set<State<std::pair<int, int>, double> *, StateHash<std::pair<int, int>, double>, StateEqual<std::pair<int, int>, double>>
     getAllPossibleStatesFrom(State<std::pair<int, int>, double> *state) {
 
