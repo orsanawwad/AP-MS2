@@ -1,7 +1,7 @@
 #ifndef AP_MS2_THREADPOOL_H
 #define AP_MS2_THREADPOOL_H
 
-#define THREAD_POOL_SIZE 25
+#define THREAD_POOL_SIZE 20
 
 #include <thread>
 #include <queue>
