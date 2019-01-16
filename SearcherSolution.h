@@ -10,22 +10,29 @@
 template<typename StateType, typename CostType>
 class SearcherSolution : public Solution<std::string,CostType> {
 private:
-    std::unordered_map<std::pair<int, int>, std::string, PairHash<int, int>> helperMap;
     State<StateType, CostType> *fromState;
 public:
 
-    SearcherSolution(State<StateType, CostType> *fromState) : fromState(fromState) {
+    SearcherSolution(State<StateType, CostType> *fromState) : fromState(fromState) {}
+
+    virtual CostType getCost() const {
+        if (fromState == NULL) {
+            return CostType(-1);
+        }
+        return fromState->getCost();
+    }
+
+    virtual std::string getValues() const {
+        if (fromState == NULL) {
+            return std::string("-1");
+        }
+
+        std::unordered_map<std::pair<int, int>, std::string, PairHash<int, int>> helperMap;
         helperMap.insert({{0, 1}, "Right"});
         helperMap.insert({{0, -1}, "Left"});
         helperMap.insert({{1, 0}, "Down"});
         helperMap.insert({{-1, 0}, "Up"});
-    }
 
-    virtual CostType getCost() const {
-        return fromState->getCost();
-    }
-
-    virtual std::string getValues() {
         State<StateType, CostType> *currentState = fromState;
         std::vector<std::string> directions;
         while (currentState->getParentState() != NULL) {

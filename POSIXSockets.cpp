@@ -11,6 +11,10 @@ posix_sockets::TCPSocket::TCPSocket() {
     if (sock_fd < 0) {
         throw std::system_error(std::error_code(errno, std::generic_category()), "failure on opening socket");
     }
+
+    int opt = 1;
+    setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+               &opt, sizeof(opt));
 }
 
 posix_sockets::TCPSocket::TCPSocket(int open_sock_fd) : sock_fd(open_sock_fd) {}

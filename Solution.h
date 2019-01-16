@@ -9,7 +9,8 @@ template<typename ReturnType, typename CostType>
 class Solution {
 public:
     virtual CostType getCost() const = 0;
-    virtual ReturnType getValues() = 0;
+    virtual ReturnType getValues() const = 0;
+    virtual ~Solution() {}
 };
 
 template<typename ReturnType, typename CostType>

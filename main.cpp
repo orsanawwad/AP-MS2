@@ -26,6 +26,13 @@ int main() {
     server->open(5400,clientHandler);
 
     delete server;
+    server = NULL;
+    delete solver;
+    solver = NULL;
+    delete cm;
+    cm = NULL;
+    delete clientHandler;
+    clientHandler = NULL;
 
 //    server->open(5400,clientHandler);
 
