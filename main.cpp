@@ -18,6 +18,7 @@
 int main() {
 
     server_side::IServer * server = new MyParallelServer();
+//    server_side::IServer * server = new MySerialServer();
 //    server_side::IClientHandler * clientHandler = new MyTestClientHandler();
     server_side::ICacheManager<std::string, std::string> * cm = new FileCacheManager;
     server_side::ISolver<ISearchable<std::pair<int,int>,double>*,std::string>* solver = new SearchableSolverAdapter();

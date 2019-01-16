@@ -6,7 +6,7 @@
 #define AP_MS2_THREADPOOL_H
 
 //#define THREAD_POOL_SIZE std::thread::hardware_concurrency()
-#define THREAD_POOL_SIZE 12
+#define THREAD_POOL_SIZE 50
 
 #include <thread>
 #include <queue>
