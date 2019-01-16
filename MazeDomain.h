@@ -15,6 +15,7 @@
 //template<typename StateType, typename CostType>
 class MazeDomain : public Searchable<std::pair<int, int>, double> {
 protected:
+    std::vector<State<std::pair<int, int>, double>*> listOfPointersToRemove;
     State<std::pair<int, int>, double> *initialState;
     State<std::pair<int, int>, double> *goalState;
     std::vector<std::vector<State<std::pair<int, int>, double> *>> values;
@@ -81,6 +82,9 @@ public:
     }
 
     virtual ~MazeDomain() {
+        for (auto state : listOfPointersToRemove) {
+            delete state;
+        }
         for (auto row : values) {
             for (auto state : row) {
                 delete state;
@@ -110,6 +114,7 @@ public:
         if (isValidIndex(up)) {
             State<std::pair<int, int>, double> *upState = new State<std::pair<int, int>, double>(
                     values[up.first][up.second]);
+            listOfPointersToRemove.push_back(upState);
             if (state->getParentState() == NULL || *upState != *state->getParentState()) {
                 if (upState->getCost() != -1) {
                     upState->setCost(state->getCost() + upState->getCost());
@@ -122,6 +127,7 @@ public:
         if (isValidIndex(down)) {
             State<std::pair<int, int>, double> *downState = new State<std::pair<int, int>, double>(
                     values[down.first][down.second]);
+            listOfPointersToRemove.push_back(downState);
             if (state->getParentState() == NULL || *downState != *state->getParentState()) {
                 if (downState->getCost() != -1) {
                     downState->setCost(state->getCost() + downState->getCost());
@@ -134,6 +140,7 @@ public:
         if (isValidIndex(left)) {
             State<std::pair<int, int>, double> *leftState = new State<std::pair<int, int>, double>(
                     values[left.first][left.second]);
+            listOfPointersToRemove.push_back(leftState);
             if (state->getParentState() == NULL || *leftState != *state->getParentState()) {
                 if (leftState->getCost() != -1) {
                     leftState->setCost(state->getCost() + leftState->getCost());
@@ -146,6 +153,7 @@ public:
         if (isValidIndex(right)) {
             State<std::pair<int, int>, double> *rightState = new State<std::pair<int, int>, double>(
                     values[right.first][right.second]);
+            listOfPointersToRemove.push_back(rightState);
             if (state->getParentState() == NULL || *rightState != *state->getParentState()) {
                 if (rightState->getCost() != -1) {
                     rightState->setCost(state->getCost() + rightState->getCost());

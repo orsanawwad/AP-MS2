@@ -14,6 +14,7 @@ void MyParallelServer::close() {
 MyParallelServer::~MyParallelServer() {
     this->serverThread->join();
     delete server;
+    this->server = NULL;
     delete this->serverThread;
     this->serverThread = NULL;
 }
