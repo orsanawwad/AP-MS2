@@ -1,6 +1,6 @@
 #include "MyParallelServer.h"
 
-#define TIMEOUT_TIME 60
+#define TIMEOUT_TIME 15
 
 void MyParallelServer::open(int port, server_side::IClientHandler *clientHandler) {
     this->clientHandler = clientHandler;

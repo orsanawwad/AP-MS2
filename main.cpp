@@ -15,14 +15,14 @@
 #include "SearchableSolverAdapter.h"
 #include "MyClientHandler.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
     server_side::IServer * server = new MyParallelServer();
     server_side::ICacheManager<std::string, std::string> * cm = new FileCacheManager;
     server_side::ISolver<ISearchable<std::pair<int,int>,double>*,std::string>* solver = new SearchableSolverAdapter();
     server_side::IClientHandler * clientHandler = new MyClientHandler(solver,cm);
 
-    server->open(5400,clientHandler);
+    server->open(stoi(argv[1]),clientHandler);
 
     delete server;
     server = NULL;
