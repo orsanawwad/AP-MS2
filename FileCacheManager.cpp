@@ -11,11 +11,11 @@ bool FileCacheManager::doesExist(std::string key) {
 std::string FileCacheManager::get(std::string key) {
     std::string result;
     cache_mutex.lock();
-    if (doesExist(key)) {
-        result = solutionsMap[key];
-    } else {
-        result = "-1";
-    }
+//    if (doesExist(key)) {
+    result = solutionsMap[key];
+//    } else {
+//        result = "-1";
+//    }
     cache_mutex.unlock();
     return result;
 }

@@ -11,52 +11,37 @@
 #include "MySerialServer.h"
 
 void MySerialServer::open(int port, server_side::IClientHandler *clientHandler) {
-    int sockfd, newsockfd, clilen;
-    struct sockaddr_in serv_addr, cli_addr;
-
-    /* First call to socket() function */
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (sockfd < 0) {
-        perror("ERROR opening socket");
-        exit(1);
-    }
-
-    /* Initialize socket structure */
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(port);
-
-    /* Now bind the host address using bind() call.*/
-    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-        perror("ERROR on binding");
-        exit(1);
-    }
-
-    /* Now start listening for the clients, here process will
-     * go in sleep mode and will wait for the incoming connection
-     */
-
-    listen(sockfd, 5);
-    clilen = sizeof(cli_addr);
-
-    while (1) {
-        /* Accept actual connection from the client */
-        newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
-
-        if (newsockfd < 0) {
-            perror("ERROR on accept");
-            exit(1);
-        }
-
-//        clientHandler->handleClient(newsockfd);
-
-    }
-
+    this->clientHandler = clientHandler;
+    this->server = new posix_sockets::TCPServer(port);
+    this->server->listen(maxAllowedListens);
+    this->serverThread = new std::thread(&MySerialServer::startAccepting, this);
 }
 
 void MySerialServer::close() {
+    this->serverThread->join();
+    delete server;
+    server = NULL;
+    delete this->serverThread;
+    this->serverThread = NULL;
+}
 
+void MySerialServer::startAccepting() {
+    while (!this->should_exit) {
+        try {
+            posix_sockets::TCPClient newClient = this->server->accept();
+            clientHandler->handleClient(newClient);
+            this->server->setTimeout(5);
+        } catch (posix_sockets::timeout_exception & e) {
+            std::cout << "No new clients received, exiting..." << std::endl;
+            this->server->close();
+            this->close();
+            break;
+        }
+    }
+}
+
+MySerialServer::~MySerialServer() {
+    this->serverThread->join();
+    delete server;
+    server = NULL;
 }
