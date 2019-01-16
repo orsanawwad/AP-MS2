@@ -30,14 +30,6 @@ std::string SearchableSolverAdapter::solve(ISearchable<std::pair<int, int>, doub
      */
     auto finalSolution = std::min(std::min(solution1,solution2),std::min(solution3,solution4));
 
-    std::cout << solution1.getCost() << "," << bfs.getNumberOfStatesEvaluated() << std::endl;
-    std::cout << solution2.getCost() << "," << dfs.getNumberOfStatesEvaluated() << std::endl;
-    std::cout << solution3.getCost() << "," << bestFirstSearch.getNumberOfStatesEvaluated() << std::endl;
-    std::cout << solution4.getCost() << "," << aStarAlgo.getNumberOfStatesEvaluated() << std::endl;
-
-//    std::cout << searchable->getSize() << "," << bfs.getNumberOfStatesEvaluated() << "," << dfs.getNumberOfStatesEvaluated() << "," << bestFirstSearch.getNumberOfStatesEvaluated() << "," << aStarAlgo.getNumberOfStatesEvaluated() << std::endl;
-
-
     /**
      * Return it.
      */

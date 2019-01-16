@@ -1,5 +1,7 @@
 #include "MyParallelServer.h"
 
+#define TIMEOUT_TIME 60
+
 void MyParallelServer::open(int port, server_side::IClientHandler *clientHandler) {
     this->clientHandler = clientHandler;
     this->server = new posix_sockets::TCPServer(port);
@@ -25,9 +27,8 @@ void MyParallelServer::startAccepting() {
             posix_sockets::TCPClient newClient = this->server->accept();
             Task *task = new ClientHandlerTaskAdapter(clientHandler, newClient);
             threadPool.addTask(task);
-            this->server->setTimeout(60);
+            this->server->setTimeout(TIMEOUT_TIME);
         } catch (posix_sockets::timeout_exception & e) {
-            std::cout << "No new clients received, exiting..." << std::endl;
             this->server->close();
             this->close();
             break;

@@ -44,7 +44,7 @@ std::unordered_map<std::string, std::string> FileCacheManager::loadFromFile() {
             tempMap[base64Codec.decodeValue(splitResult[0])] = base64Codec.decodeValue(splitResult[1]);
         }
         myfile.close();
-    } else cout << "Unable to open file2";
+    }
     return tempMap;
 }
 
@@ -56,7 +56,7 @@ void FileCacheManager::saveToFile(unordered_map<string, string> problemSoultion)
             myfile << base64Codec.encodeValue(pair.first) + "," + base64Codec.encodeValue(pair.second) + "\n";
         }
         myfile.close();
-    } else cout << "Unable to open file1";
+    }
 
 }
 
