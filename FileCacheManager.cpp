@@ -2,22 +2,26 @@
 #include "FileCacheManager.h"
 
 bool FileCacheManager::doesExist(std::string key) {
-    return solutionsMap.count(key);
+    cache_mutex.lock();
+    bool result = solutionsMap.count(key) > 0;
+    cache_mutex.unlock();
+    return result;
 }
 
 std::string FileCacheManager::get(std::string key) {
-    if (doesExist(key)) {
-        return solutionsMap[key];
-    } else {
-        return "-1";
-    }
+    std::string result;
+    cache_mutex.lock();
+    result = solutionsMap[key];
+    cache_mutex.unlock();
+    return result;
 }
 
 void FileCacheManager::set(std::string key, std::string value) {
 
+    cache_mutex.lock();
     this->solutionsMap[key] = value;
     saveToFile(solutionsMap);
-
+    cache_mutex.unlock();
 
 }
 
